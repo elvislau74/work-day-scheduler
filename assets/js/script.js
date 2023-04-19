@@ -2,7 +2,7 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 $(function () {
-  var timeBlockEl = $('.description');
+  var buttonEl = $('.btn');
   var dateAndTime = $('#currentDay')
   var currentHour = dayjs().format('HH');
   var timeSlots = [
@@ -40,6 +40,7 @@ $(function () {
       $(hourId).addClass("future");
     }
   });
+  
   function init(){
     $.each(timeSlots, function(index, value){
       var userInfo = localStorage.getItem('blockInfo');
@@ -59,7 +60,9 @@ $(function () {
   // time-block containing the button that was clicked? How might the id be
   // useful when saving the description in local storage?
   //
-  timeBlockEl.on('click', '.saveBtn', function() {
+
+  buttonEl.on('click', function() {
+    console.log("test");
     $.each(timeSlots, function(index, value) {
       var userEntry = $(value.idTime).val();
 
@@ -68,6 +71,22 @@ $(function () {
       }
       localStorage.setItem('blockInfo', JSON.stringify(timeBlockInfo));
     })
+
+    var confirmationMessage = $('#confirm-message');
+    var storageMessage = $('.storage-message');
+    var checkMark = $('.checkmark');
+
+    confirmationMessage.css('color', 'black')
+    storageMessage.css('color', 'red')
+    checkMark.css('color', 'green');
+
+    function messageTimeout(){
+      confirmationMessage.css('color', 'transparent');
+      storageMessage.css('color', 'transparent');
+      checkMark.css('color', 'transparent')
+    }
+
+    setTimeout(messageTimeout, 2000);
   });
   //
   // TODO: Add code to get any user input that was saved in localStorage and set
